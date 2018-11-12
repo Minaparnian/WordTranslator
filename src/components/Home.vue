@@ -14,7 +14,12 @@ export default {
   name: 'HelloWorld',
   data: () => ({
     word: ''
-  })
+  }),
+  methods: {
+    getWord (e) {
+      alert(this.word)
+    }
+  }
 }
 </script>
 
