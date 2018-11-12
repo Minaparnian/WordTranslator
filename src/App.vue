@@ -45,6 +45,7 @@ export default {
     a {
       color: white;
       text-decoration: none;
+      padding: 20px;
     }
   }
   #header-nav {

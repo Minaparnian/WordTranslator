@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="wordlist-container">
     <div class="wordlist-columns">
-      <h2 v-text="word"></h2>
+      <h2>{{ word }}</h2>
     </div>
     <div class="nav-links">
-      <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link :to="{ name: 'WordList' }">Word List</router-link>
+      <router-link v-bind:to="{ name: 'Home'}">Home</router-link>
+      <router-link v-bind:to="{ name: 'WordList'}">Word List</router-link>
     </div>
   </div>
 </template>
@@ -13,10 +13,11 @@
 <script>
 export default {
   name: 'WordList',
-  data: () => ({
-    word: this.$route.param.id
-  })
-
+  data () {
+    return {
+      word: this.$route.params.id
+    }
+  }
 }
 </script>
 

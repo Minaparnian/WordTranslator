@@ -2,22 +2,38 @@
   <div class="home">
     <div class="input-container">
       <div class="input-group">
-        <input type="text" v-model="word">
+        <input type="text" v-model="word" v-on:keydown.enter="getWord">
         <button @click="getWord" type="submit">Add Word</button>
+      </div>
+      <div class="word-meaning">
+        {{ wordMeaning }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import WordService from '@/services/WordService'
 export default {
-  name: 'HelloWorld',
-  data: () => ({
-    word: ''
-  }),
+  name: 'Home',
+  data () {
+    return {
+      word: '',
+      wordData: ''
+    }
+  },
+  computed: {
+    wordMeaning () {
+      if (this.wordData) {
+        return this.wordData.senses[0].definition
+      }
+      return ''
+    }
+  },
   methods: {
-    getWord (e) {
-      alert(this.word)
+    async getWord () {
+      const response = await WordService.getWord({ word: this.word })
+      this.wordData = response.data.results[0]
     }
   }
 }
