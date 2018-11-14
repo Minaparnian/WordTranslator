@@ -6,7 +6,11 @@
         <button @click="getWord" type="submit">Add Word</button>
       </div>
       <div class="word-meaning">
-        {{ wordMeaning }}
+        {{ wordMeaning || error }}
+        <div class="word-links" v-if="wordData">
+          <router-link v-bind:to="{ name: 'Word', params: { id: word, word: word, data:wordData } }">Read More</router-link>
+          <router-link v-bind:to="{ name: 'WordList'}">Word List</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -14,12 +18,14 @@
 
 <script>
 import WordService from '@/services/WordService'
+import { mapState } from 'vuex'
 export default {
   name: 'Home',
   data () {
     return {
       word: '',
-      wordData: ''
+      wordData: '',
+      error: ''
     }
   },
   computed: {
@@ -28,12 +34,28 @@ export default {
         return this.wordData.senses[0].definition
       }
       return ''
-    }
+    },
+    ...mapState([
+      'words'
+    ])
   },
   methods: {
     async getWord () {
+      if (this.word === '') {
+        this.error = 'Please enter a word.'
+        this.wordData = ''
+        return false
+      }
       const response = await WordService.getWord({ word: this.word })
-      this.wordData = response.data.results[0]
+
+      let responses = response.data.results
+
+      if (responses.length === 0) {
+        this.error = 'Your word could not be found and was not added.'
+        this.wordData = ''
+        return false
+      }
+      this.wordData = responses[0]
     }
   }
 }
@@ -71,6 +93,28 @@ export default {
         border: none;
         font-weight: bold;
         font-size: 12pt;
+        cursor: pointer;
+      }
+    }
+  }
+  .word-meaning {
+    margin: 20px 0;
+    font-size: 18px;
+    font-weight: bold;
+    .word-links{
+      margin: 30px 0 20px 0;
+      font-size: 14px;
+      font-weight: regular;
+      a {
+        border: 1px solid royalblue;
+        text-decoration: none;
+        padding: 5px 12px 3px 12px;
+        margin: 0 10px;
+        text-transform: uppercase;
+
+        &:focus {
+            color: royalblue;
+        }
       }
     }
   }

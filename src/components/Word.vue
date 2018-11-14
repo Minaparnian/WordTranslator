@@ -1,7 +1,25 @@
 <template lang="html">
   <div class="wordlist-container">
     <div class="wordlist-columns">
-      <h2>{{ word }}</h2>
+      <h2>{{ word }} <span v-if="partOfSpeech">[{{ partOfSpeech }}]</span>:</h2>
+      <div class="word-info">
+        <ul class="words" v-if="senses">
+          <li v-for="(sense, index) in senses" :key="index">
+            <div class="word-definition">
+              <h3>Definition #{{ index + 1}}</h3>
+              <blockquote><p>{{ sense.definition }}</p></blockquote>
+              <div class="example" v-if="sense.examples">
+                <h4>Examples: </h4>
+                <ul class="examples">
+                  <li v-for="(example, indexEx) in sense.examples" :key="indexEx">
+                      {{ example.text }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="nav-links">
       <router-link v-bind:to="{ name: 'Home'}">Home</router-link>
@@ -11,11 +29,26 @@
 </template>
 
 <script>
+import WordService from '@/services/WordService'
 export default {
   name: 'WordList',
   data () {
     return {
-      word: this.$route.params.id
+      word: this.$route.params.id,
+      wordId: this.$route.params.data.id,
+      partOfSpeech: '',
+      senses: ''
+    }
+  },
+  mounted () {
+    this.getWordDetails(this.wordId)
+  },
+  methods: {
+    async getWordDetails (params) {
+      const response = await WordService.getWordDetails(params)
+      let data = response.data.result
+      this.partOfSpeech = data.part_of_speech
+      this.senses = data.senses
     }
   }
 }
@@ -92,6 +125,26 @@ export default {
       text-decoration: none;
       color: white;
     }
+  }
+  blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+    width: fit-content;
+  }
+
+  blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+  blockquote p {
+    display: inline;
   }
 }
 </style>
