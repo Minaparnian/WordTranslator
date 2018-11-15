@@ -74,6 +74,7 @@ export default {
   .input-container {
     max-width: 500px;
     width: 100%;
+    padding: 20px;
     .input-group {
       display: flex;
       justify-content: space-between;

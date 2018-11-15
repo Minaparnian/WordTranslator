@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wordlist-container">
+    <h2 class="header">{{ word }} <span v-if="partOfSpeech">[{{ partOfSpeech }}]</span></h2>
     <div class="wordlist-columns">
-      <h2>{{ word }} <span v-if="partOfSpeech">[{{ partOfSpeech }}]</span>:</h2>
       <div class="word-info">
         <ul class="words" v-if="senses">
           <li v-for="(sense, index) in senses" :key="index">
@@ -68,12 +68,17 @@ export default {
 .wordlist-container{
   margin-top: 60px;
 
+  .header {
+    text-align: left;
+    margin-left: 40px;
+    font-size: 32px;
+  }
+
   .wordlist-columns{
     width: 100%;
     display: flex;
     margin: 0 auto;
     text-align: left;
-    align-items: center;
 
     h2{
       flex: 0 0 15%;
@@ -123,12 +128,12 @@ export default {
     justify-content: space-between;
 
     a {
-      padding: 20px 50px;
+      padding: 20px;
       text-align: center;
       background-color: royalblue;
       -webkit-box-flex: 0;
       -ms-flex: 0 0 48%;
-      flex: 0 0 48%;
+      width: 30%;
       margin: 0 20px;
       box-sizing: border-box;
       display: block;

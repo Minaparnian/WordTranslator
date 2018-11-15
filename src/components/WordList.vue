@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="wordlist-container">
+    <h2>My Stored Words:</h2>
     <div class="wordlist-columns">
-      <h2>My Stored Words:</h2>
       <div class="wordlist">
         <ul>
           <li v-for="(word, index) in words" :key="index">
@@ -53,7 +53,7 @@ export default {
 
     .wordlist {
       overflow: auto;
-      flex: 0 0 85%;
+      width: 100%;
 
       ul {
         list-style: none;
@@ -62,8 +62,7 @@ export default {
         height: calc(100vh-84px);
         display: flex;
         flex-wrap: wrap;
-        margin-left: -10px;
-        margin-top: -10px;
+        justify-content: center;
 
         li {
           text-align:  center;
@@ -73,9 +72,8 @@ export default {
           flex: 1 0 auto;
           box-sizing: border-box;
           padding: 10px;
-          margin-left: 10px;
           margin-top: 10px;
-          max-width: 250px;
+          width: 250px;
 
           a {
             color: white;
