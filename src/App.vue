@@ -6,8 +6,8 @@
       <router-link v-for="(word, index) in words.slice(0, 1)" :key="index" :to="latestWord" v-text="word.headword"></router-link>
     </div>
     <router-view/>
-    <div id="footer-nav" class="nav-bars">
-      My Dictionary 2018 - {{ wordCount }} words has been added.
+    <div id="footer-nav" class="nav-bars" v-for="(word, key) in words" :key="key">
+        My Dictionary 2018 -{{ key + 1 }} words has been added.
     </div>
   </div>
 </template>
