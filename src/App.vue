@@ -3,7 +3,7 @@
     <div id="header-nav" class="nav-bars">
       <router-link to="/">Home</router-link>
       <router-link to="/words">Words</router-link>
-      <router-link :to="latestWord" v-text="latestWord"></router-link>
+      <router-link v-for="(word, index) in words.slice(0, 1)" :key="index" :to="latestWord" v-text="word.headword"></router-link>
     </div>
     <router-view/>
     <div id="footer-nav" class="nav-bars">
@@ -18,8 +18,13 @@ export default {
   name: 'App',
   data: () => ({
     wordCount: 0,
-    latestWord: 'Latest_Word'
-  })
+    latestWord: ''
+  }),
+  computed: {
+    words () {
+      return this.$store.state.words.slice().reverse()
+    }
+  }
 }
 </script>
 

@@ -5,7 +5,7 @@
       <div class="wordlist">
         <ul>
           <li v-for="(word, index) in words" :key="index">
-            <router-link :to="{ name: 'Word', params: { id: word, word: word } }" v-text="word"></router-link>
+            <router-link :to="{ name: 'Word', params: { id: word.headword, word: word.headword, data:word } }" v-text="word.headword"></router-link>
           </li>
         </ul>
       </div>
@@ -17,9 +17,11 @@
 <script>
 export default {
   name: 'WordList',
-  data: () => ({
-    words: ['test', 'compare', 'exercise', 'judge', 'matters', 'mouse', 'cycle']
-  })
+  computed: {
+    words () {
+      return this.$store.state.words.slice().reverse()
+    }
+  }
 }
 </script>
 

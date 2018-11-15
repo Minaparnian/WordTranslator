@@ -10,7 +10,7 @@ export default new Vuex.Store(
     },
     mutations: {
       addWord (state, word) {
-        state.word.push(word)
+        state.words.push(word)
       },
       deleteWord (state, word) {
         state.words = state.words.filter(obj => obj.headword !== word)

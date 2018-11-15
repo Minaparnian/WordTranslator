@@ -24,6 +24,7 @@
     <div class="nav-links">
       <router-link v-bind:to="{ name: 'Home'}">Home</router-link>
       <router-link v-bind:to="{ name: 'WordList'}">Word List</router-link>
+      <a href="#" @click="deleteWord(word)">Delete Word</a>
     </div>
   </div>
 </template>
@@ -43,12 +44,21 @@ export default {
   mounted () {
     this.getWordDetails(this.wordId)
   },
+  computed: {
+    words () {
+      return this.$store.state.words
+    }
+  },
   methods: {
     async getWordDetails (params) {
       const response = await WordService.getWordDetails(params)
       let data = response.data.result
       this.partOfSpeech = data.part_of_speech
       this.senses = data.senses
+    },
+    deleteWord (word) {
+      this.$store.commit('deleteWord', word)
+      this.$router.push({ name: 'Home' })
     }
   }
 }

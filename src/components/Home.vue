@@ -18,7 +18,6 @@
 
 <script>
 import WordService from '@/services/WordService'
-import { mapState } from 'vuex'
 export default {
   name: 'Home',
   data () {
@@ -35,9 +34,9 @@ export default {
       }
       return ''
     },
-    ...mapState([
-      'words'
-    ])
+    words () {
+      return this.$store.state.words
+    }
   },
   methods: {
     async getWord () {
@@ -56,6 +55,10 @@ export default {
         return false
       }
       this.wordData = responses[0]
+      let words = this.words
+      if (!words.filter(word => word.headword === this.word).length > 0) {
+        this.$store.commit('addWord', this.wordData)
+      }
     }
   }
 }
