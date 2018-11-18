@@ -1,6 +1,13 @@
 # wordtranslate
 
-> Building a dictionary application where a user can enter a word and use a RESTful API to retrieve the word’s meaning and information about the word.knkjsdbhbsdm
+> Building a dictionary application where a user can enter a word and use a RESTful API to retrieve the word’s meaning and information about the word.
+
+# Buld with
+
+* Vue js
+* Vuex
+* Vue Router
+
 
 ## Build Setup
 
